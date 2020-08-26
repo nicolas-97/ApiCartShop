@@ -11,6 +11,12 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('statuses')->insert([
+            'name' => "Completed",
+        ]);
+
+        DB::table('statuses')->insert([
+            'name' => "Pending",
+        ]);
     }
 }
