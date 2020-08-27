@@ -3,28 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Products_Cart;
+use App\Carts;
 use Illuminate\Http\Request;
 
 class ProductsCartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,7 +17,22 @@ class ProductsCartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(is_null($request->cart_id)){
+            $cartsController = new CartsController;
+            $cartVariable = $cartsController->store();
+            $product = new Products_Cart;
+            $product->cart_id = $cartVariable->id;
+            $product->product_id = $request->product_id;
+            $product->quantity = $request->quantity;
+            $product->created_at = date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
+            $product->updated_at = date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
+            $product->save();
+            return  $product;
+        }else{
+            $product = Products_Cart::create($request->all());
+            return $product;
+        }
+        
     }
 
     /**
@@ -43,21 +41,12 @@ class ProductsCartController extends Controller
      * @param  \App\Products_Cart  $products_Cart
      * @return \Illuminate\Http\Response
      */
-    public function show(Products_Cart $products_Cart)
+    public function show($idProducCart)
     {
-        //
+        $detail = Products_Cart::find($idProducCart);
+        return $detail;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Products_Cart  $products_Cart
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Products_Cart $products_Cart)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
