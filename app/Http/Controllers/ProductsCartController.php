@@ -55,9 +55,12 @@ class ProductsCartController extends Controller
      * @param  \App\Products_Cart  $products_Cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Products_Cart $products_Cart)
+    public function update(Request $request)
     {
-        //
+        $input = $request->all();
+        $productsCart = new Products_Cart;
+        $productsCart->fill($input)->save();
+        return $productsCart;
     }
 
     /**
