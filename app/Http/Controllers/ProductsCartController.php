@@ -57,9 +57,9 @@ class ProductsCartController extends Controller
      */
     public function update(Request $request)
     {
-        $input = $request->all();
-        $productsCart = new Products_Cart;
-        $productsCart->fill($input)->save();
+        $productsCart = Products_Cart::find($request->id);
+        $productsCart->quantity = $request->quantity;
+        $productsCart->save(); 
         return $productsCart;
     }
 
