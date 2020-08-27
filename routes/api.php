@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('product','ProductsController');
 
+Route::apiResource('cart','CartsController');

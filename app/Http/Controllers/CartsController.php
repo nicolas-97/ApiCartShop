@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Carts;
 use Illuminate\Http\Request;
+use DB;
 
 class CartsController extends Controller
 {
@@ -14,18 +15,13 @@ class CartsController extends Controller
      */
     public function index()
     {
-        //
+        $carts = DB::table('carts')
+                    ->join('statuses','statuses.id','=','carts.status_id')
+                    ->select('carts.*','statuses.name')
+                    ->get();
+        return $carts;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,20 +40,14 @@ class CartsController extends Controller
      * @param  \App\Carts  $carts
      * @return \Illuminate\Http\Response
      */
-    public function show(Carts $carts)
+    public function show($idCarts)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Carts  $carts
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Carts $carts)
-    {
-        //
+        $cart = DB::table('carts')
+                ->join('statuses','statuses.id','=','carts.status_id')
+                ->select('carts.*','statuses.name')
+                ->where('carts.id',$idCarts)
+                ->get();
+        return $cart;
     }
 
     /**
@@ -72,14 +62,4 @@ class CartsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Carts  $carts
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Carts $carts)
-    {
-        //
-    }
 }
