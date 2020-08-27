@@ -69,8 +69,13 @@ class ProductsCartController extends Controller
      * @param  \App\Products_Cart  $products_Cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products_Cart $products_Cart)
+    public function destroy($id)
     {
-        //
+        $Products_Cart = Products_Cart::findOrFail($id);
+        if($Products_Cart)
+            $Products_Cart->delete(); 
+        else
+            return response()->json(error);
+        return true; 
     }
 }
