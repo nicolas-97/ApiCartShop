@@ -29,9 +29,14 @@ class CartsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $newCart = new Carts;
+        $newCart->status_id = 2;
+        
+        $newCart->save();
+
+        return $newCart;
     }
 
     /**
@@ -57,9 +62,13 @@ class CartsController extends Controller
      * @param  \App\Carts  $carts
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Carts $carts)
+    public function update($idCarts)
     {
-        //
+        $cart = Carts::where('id',$idCarts)
+                        ->update(['status_id'=>2]);
+
+        return $cart;
+
     }
 
 }
