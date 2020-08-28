@@ -53,7 +53,7 @@ class CartsController extends Controller
                 ->join('statuses','statuses.id','=','carts.status_id')
                 ->join('products__carts','products__carts.cart_id','=','carts.id')
                 ->join('products','products.id','=','products__carts.product_id')
-                ->select('products__carts.*','products.*')
+                ->select('products__carts.cart_id','products.*','products__carts.id','products__carts.quantity')
                 ->where('carts.id',$idCarts)
                 ->get();
         return $cart;
