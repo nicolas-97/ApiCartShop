@@ -17,7 +17,9 @@ class CartsController extends Controller
     {
         $carts = DB::table('carts')
                     ->join('statuses','statuses.id','=','carts.status_id')
+                    ->join('products__carts','products__carts.cart_id','=','carts.id')
                     ->select('carts.*','statuses.name')
+                    ->where('statuses.id',2)
                     ->get();
         return $carts;
     }

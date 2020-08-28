@@ -27,12 +27,19 @@ class ProductsCartController extends Controller
             $product->created_at = date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
             $product->updated_at = date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
             $product->save();
-            return  $product;
+            return  $cartVariable;
         }else{
-            $product = Products_Cart::create($request->all());
-            return $product;
+            $product = Products_Cart::where('product_id',$request->product_id)
+                                        ->where('cart_id',$request->cart_id)
+                                        ->get();
+            if(count($product)==0){
+                $product = Products_Cart::create($request->all());
+                return $product;
+            }
+            $product[0]->quantity += $request->quantity;
+            $product[0]->save(); 
+            return $product[0];
         }
-        
     }
 
     /**
